@@ -1,5 +1,5 @@
 const request = require('request');
-const { WEATHER_API_KEY } = require('../config.json');
+const { WEATHER_API_KEY, WEATHER_UNITS } = require('../config.json');
 
 module.exports = {
 	name: 'weather',
@@ -9,14 +9,16 @@ module.exports = {
     usage: '{city}',
 	execute(message, args) {
         let apiKey = WEATHER_API_KEY;
-        let city = args[0];
-        let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+        let city = args.join(' ');
+        let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${WEATHER_UNITS}`
 
 		request(url, function (err, response, body) {
             if(err){
-              console.log('error:', error);
             } else {
-              console.log('body:', body);
+                let result = JSON.parse(body);
+                message.channel.send(
+                    `Country: ${result.sys.country}\nCity: ${result.name}\nTimezon: GMT${result.timezone / 3600}\nWeather: ${result.weather[0].main}\nDescription: ${result.weather[0].description}\nTemp: ${result.main.temp} degrees celsius\nPressure: ${result.main.pressure}\nHumidity: ${result.main.humidity}` 
+                )
             }
         });
 	}
