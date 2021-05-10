@@ -14,7 +14,7 @@ module.exports = {
             url: 'https://sameer-kumar-aztro-v1.p.rapidapi.com/',
             qs: {sign, day: 'today'},
             headers: {
-              'x-rapidapi-key': RAPID_API_KEY,
+              'x-rapidapi-key': process.env.RAPID_API_KEY || RAPID_API_KEY,
               'x-rapidapi-host': 'sameer-kumar-aztro-v1.p.rapidapi.com',
               useQueryString: true
             }

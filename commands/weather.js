@@ -8,9 +8,10 @@ module.exports = {
     cooldown: 5,
     usage: '{city}',
 	execute(message, args) {
-        let apiKey = WEATHER_API_KEY;
+        let apiKey = process.env.WEATHER_API_KEY || WEATHER_API_KEY;
         let city = args.join(' ');
-        let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${WEATHER_UNITS}`
+        let units = process.env.WEATHER_UNITS || WEATHER_UNITS;
+        let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`
 
 		request(url, function (err, response, body) {
             if(err){

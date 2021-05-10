@@ -28,9 +28,9 @@ client.once('ready', () => {
 
 
 client.on('message', message => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	if (!message.content.startsWith(process.env.prefix || prefix) || message.author.bot) return;
 
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const args = message.content.slice(process.env.prefix || prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
 	const command = client.commands.get(commandName)
@@ -73,4 +73,4 @@ client.on('message', message => {
 	}
 });
 
-client.login(BOT_TOKEN);
+client.login(process.env.BOT_TOKEN || BOT_TOKEN);
