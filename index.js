@@ -30,12 +30,11 @@ client.once('ready', () => {
 client.on('message', message => {
 	if (!message.content.startsWith(process.env.prefix || prefix) || message.author.bot) return;
 
-	const args = message.content.slice(process.env.prefix || prefix.length).trim().split(/ +/);
+	const args = message.content.slice(process.env.prefix.length || prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
 	const command = client.commands.get(commandName)
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
     if (!command) {
         message.reply('I can\'t find that command.');
         return;
